@@ -3,53 +3,119 @@ from ui import UI
 from ai import AI
 import pygame as pg
 
+
+def handle_pygame_events(chess_board: ChessBoard, ui: UI) -> bool:
+    """
+    This function handles pygame events such as quitting the game and 
+    processing player moves.
+
+    :param chess_board: The chess board object.
+    :param ui: The user interface object.
+    :return: True if the game should continue running, False otherwise.
+    """
+
+    global selected_piece, player_go
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            return False  # Signal to stop the game loop
+
+        if event.type == pg.MOUSEBUTTONDOWN and player_go:
+            process_player_move(chess_board, ui)
+
+    return True  # Continue running the game loop
+
+
+def process_player_move(chess_board: ChessBoard, ui: UI) -> None:
+    """
+    This function processes the player's move by getting the clicked square 
+    and moving the piece if it is a valid move.
+
+    :param chess_board: The chess board object.
+    :param ui: The user interface object.
+
+    """
+    global selected_piece, player_go
+    clicked_row, clicked_col = ui.get_square_from_mouse(pg.mouse.get_pos())
+    if selected_piece:
+        if chess_board.move_piece(selected_piece[0], selected_piece[1],
+                                  clicked_row, clicked_col):
+            selected_piece = None
+            player_go = False  # AI's turn
+    else:
+        if chess_board.get_board()[clicked_row][clicked_col] != '-':
+            selected_piece = (clicked_row, clicked_col)
+
+
+def process_ai_move(chess_board: ChessBoard, ui: UI) -> None:
+    """
+    This function processes the AI's move by getting the best move from the 
+    minimax algorithm and moving the piece.
+
+    :param chess_board: The chess board object.
+    :param ui: The user interface object.
+    """
+
+    global player_go
+    ai_move = ai.minimax(1, False)[1]
+    if ai_move:
+        from_row, from_col, to_row, to_col = ai_move
+        if chess_board.move_piece(from_row, from_col, to_row, to_col):
+            player_go = True  # Player's turn
+
+
+def update_game_state(chess_board: ChessBoard, ui: UI) -> bool:
+    """
+    This function updates the game state by checking if the game is over and
+    updating the display.
+
+    :param chess_board: The chess board object.
+    :param ui: The user interface object.
+    :return: True if the game should continue running, False otherwise.
+    """
+
+    game_over = chess_board.is_game_over()
+    if game_over != 2:  # Assuming 2 means the game is still ongoing
+        print("Game over!")
+        return False
+    return True
+
+
+def main_game_loop():
+    """
+    This function is the main game loop that runs the game.
+    """
+
+    global run, selected_piece, player_go
+    while run:  # Main game loop
+
+        # Handle pygame events and update the run flag
+        run = handle_pygame_events(chess_board, ui)  
+
+        if not player_go:  # If it's not the player's turn
+            process_ai_move(chess_board, ai)  # Process AI's move
+
+        # Display the chess board
+        run = update_game_state(chess_board, ui) and run  
+        ui.display_board(chess_board.get_board())  
+
+        if selected_piece:  # If a piece is selected
+            # Highlight the selected square
+            ui.highlight_square(selected_piece[0], selected_piece[1])
+        pg.display.update()  # Update the display
+
+
+# Initialization code
 pg.init()
-ui = UI(400, 400)  
+ui = UI(400, 400)
 ui.setup_window()
 chess_board = ChessBoard()
 ai = AI(chess_board)
 
-
+# Global state variables
 run = True
-selected_piece = None 
+selected_piece = None
 player_go = True
 
-while run:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            run = False
-
-        if event.type == pg.MOUSEBUTTONDOWN:
-            clicked_row, clicked_col = ui.get_square_from_mouse(pg.mouse.get_pos())
-            if player_go:
-                if selected_piece:
-                    chess_board.move_piece(selected_piece[0], selected_piece[1], clicked_row, clicked_col)
-                    selected_piece = None
-                    player_go = False
-        
-                else:
-                    if chess_board.get_board()[clicked_row][clicked_col] != '-':
-                        selected_piece = (clicked_row, clicked_col)
-
-            if not player_go:
-                cc = ai.minimax(1, False)[1]
-                if cc is not None:
-                    from_row, from_col, to_row, to_col = cc
-                    valid_move = chess_board.move_piece(from_row, from_col, to_row, to_col)
-                    if valid_move:
-                        player_go = True
-                    else:
-                        print (cc)
-                        print("Invalid move")
-                        player_go = True
-
-            if chess_board.is_game_over() != 2:
-                print ("Game over! ")
-
-
-    ui.display_board(chess_board.get_board())
-
-    if selected_piece:
-        ui.highlight_square(selected_piece[0], selected_piece[1])
-
-    pg.display.update()
+# Start the game loop
+if __name__ == "__main__":
+    main_game_loop()
