@@ -200,7 +200,7 @@ class Piece:
             if not self._is_empty((row + i * row_dir, col + i * col_dir)):
                 return False
         return True
-    
+
     def _is_empty_horizontal_path(self, new_position: tuple) -> bool:
         """
         Checks if the horizontal path to the new position is empty.
@@ -222,7 +222,7 @@ class Piece:
             if not self._is_empty((row, col + i * col_dir)):
                 return False
         return True
-    
+
     def _is_empty_vertical_path(self, new_position: tuple) -> bool:
         """
         Checks if the vertical path to the new position is empty.
@@ -244,6 +244,33 @@ class Piece:
             if not self._is_empty((row + i * row_dir, col)):
                 return False
         return True
+
+    def _is_empty_path(self, new_position: tuple) -> bool:
+        """
+        Checks if the path to the new position is empty.
+
+        Args:
+            new_position (tuple): The proposed new position for the queen.
+
+        Returns:
+            bool: True if the path to the new position is empty, False
+                  otherwise.
+        """
+        row, col = self.position
+        new_row, new_col = new_position
+        row_diff = new_row - row
+        col_diff = new_col - col
+
+        # Check if the move is a diagonal move
+        if abs(row_diff) == abs(col_diff):
+            return self._is_empty_diagonal_path(new_position)
+        # Check if the move is a horizontal move
+        elif row_diff == 0:
+            return self._is_empty_horizontal_path(new_position)
+        # Check if the move is a vertical move
+        elif col_diff == 0:
+            return self._is_empty_vertical_path(new_position)
+        return False
 
     def move(self, new_position: tuple) -> None:
         """
