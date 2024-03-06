@@ -82,30 +82,3 @@ class Pawn(Piece):
             return new_row == row + 1 and \
                    (new_col == col - 1 or new_col == col + 1)
         return False
-
-    def _is_opposite_color(self, new_position: tuple) -> bool:
-        """
-        Checks if the piece at the new position is the opposite color.
-
-        Args:
-            new_position (tuple): The proposed new position for the pawn.
-
-        Returns:
-            bool: True if the piece at the new position is the opposite
-                  color, False otherwise.
-        """
-        new_row, new_col = new_position
-        return self.board[new_row][new_col].color != self.color
-
-    def _is_empty(self, new_position: tuple) -> bool:
-        """
-        Checks if the new position is empty.
-
-        Args:
-            new_position (tuple): The proposed new position for the pawn.
-
-        Returns:
-            bool: True if the new position is empty, False otherwise.
-        """
-        new_row, new_col = new_position
-        return self.board[new_row][new_col] == "-"
