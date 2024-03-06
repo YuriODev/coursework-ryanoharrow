@@ -171,6 +171,74 @@ class Piece:
         """
         pass
 
+    def _is_empty_diagonal_path(self, new_position: tuple) -> bool:
+        """
+        Checks if the diagonal path to the new position is empty.
+
+        Args:
+            new_position (tuple): The proposed new position for the _.
+
+        Returns:
+            bool: True if the diagonal path to the new position is empty,
+                  False otherwise.
+        """
+        row, col = self.position
+        new_row, new_col = new_position
+        row_diff = new_row - row
+        col_diff = new_col - col
+        row_dir = 1 if row_diff > 0 else -1
+        col_dir = 1 if col_diff > 0 else -1
+
+        # Check if the path is empty
+        for i in range(1, abs(row_diff)):
+            if not self._is_empty((row + i * row_dir, col + i * col_dir)):
+                return False
+        return True
+    
+    def _is_empty_horizontal_path(self, new_position: tuple) -> bool:
+        """
+        Checks if the horizontal path to the new position is empty.
+
+        Args:
+            new_position (tuple): The proposed new position for the piecce.
+
+        Returns:
+            bool: True if the horizontal path to the new position is empty,
+                  False otherwise.
+        """
+        row, col = self.position
+        _, new_col = new_position
+        col_diff = new_col - col
+        col_dir = 1 if col_diff > 0 else -1
+
+        # Check if the path is empty
+        for i in range(1, abs(col_diff)):
+            if not self._is_empty((row, col + i * col_dir)):
+                return False
+        return True
+    
+    def _is_empty_vertical_path(self, new_position: tuple) -> bool:
+        """
+        Checks if the vertical path to the new position is empty.
+
+        Args:
+            new_position (tuple): The proposed new position for the piece.
+
+        Returns:
+            bool: True if the vertical path to the new position is empty,
+                  False otherwise.
+        """
+        row, col = self.position
+        new_row, __dict__ = new_position
+        row_diff = new_row - row
+        row_dir = 1 if row_diff > 0 else -1
+
+        # Check if the path is empty
+        for i in range(1, abs(row_diff)):
+            if not self._is_empty((row + i * row_dir, col)):
+                return False
+        return True
+
     def move(self, new_position: tuple) -> None:
         """
         Moves the piece to the new position.
