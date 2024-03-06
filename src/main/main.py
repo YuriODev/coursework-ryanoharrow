@@ -6,12 +6,15 @@ import pygame as pg
 
 def handle_pygame_events(chess_board: ChessBoard, ui: UI) -> bool:
     """
-    This function handles pygame events such as quitting the game and 
-    processing player moves.
+    Handles pygame events such as quitting the game and processing player
+    moves.
 
-    :param chess_board: The chess board object.
-    :param ui: The user interface object.
-    :return: True if the game should continue running, False otherwise.
+    Args:
+        chess_board (ChessBoard): The chess board object.
+        ui (UI): The user interface object.
+
+    Returns:
+        bool: True if the game should continue running, False otherwise.
     """
 
     global selected_piece, player_go
@@ -27,13 +30,14 @@ def handle_pygame_events(chess_board: ChessBoard, ui: UI) -> bool:
 
 def process_player_move(chess_board: ChessBoard, ui: UI) -> None:
     """
-    This function processes the player's move by getting the clicked square 
-    and moving the piece if it is a valid move.
+    Processes the player's move by getting the clicked square and moving the
+    piece if it is a valid move.
 
-    :param chess_board: The chess board object.
-    :param ui: The user interface object.
-
+    Args:
+        chess_board (ChessBoard): The chess board object.
+        ui (UI): The user interface object.
     """
+
     global selected_piece, player_go
     clicked_row, clicked_col = ui.get_square_from_mouse(pg.mouse.get_pos())
     if selected_piece:
@@ -48,11 +52,12 @@ def process_player_move(chess_board: ChessBoard, ui: UI) -> None:
 
 def process_ai_move(chess_board: ChessBoard, ui: UI) -> None:
     """
-    This function processes the AI's move by getting the best move from the 
-    minimax algorithm and moving the piece.
+    Processes the AI's move by getting the best move from the minimax
+    algorithm and moving the piece.
 
-    :param chess_board: The chess board object.
-    :param ui: The user interface object.
+    Args:
+        chess_board (ChessBoard): The chess board object.
+        ui (UI): The user interface object.
     """
 
     global player_go
@@ -65,12 +70,15 @@ def process_ai_move(chess_board: ChessBoard, ui: UI) -> None:
 
 def update_game_state(chess_board: ChessBoard, ui: UI) -> bool:
     """
-    This function updates the game state by checking if the game is over and
-    updating the display.
+    Updates the game state by checking if the game is over and updating the
+    display.
 
-    :param chess_board: The chess board object.
-    :param ui: The user interface object.
-    :return: True if the game should continue running, False otherwise.
+    Args:
+        chess_board (ChessBoard): The chess board object.
+        ui (UI): The user interface object.
+
+    Returns:
+        bool: True if the game should continue running, False otherwise.
     """
 
     game_over = chess_board.is_game_over()
@@ -89,14 +97,14 @@ def main_game_loop():
     while run:  # Main game loop
 
         # Handle pygame events and update the run flag
-        run = handle_pygame_events(chess_board, ui)  
+        run = handle_pygame_events(chess_board, ui)
 
         if not player_go:  # If it's not the player's turn
             process_ai_move(chess_board, ai)  # Process AI's move
 
         # Display the chess board
-        run = update_game_state(chess_board, ui) and run  
-        ui.display_board(chess_board.get_board())  
+        run = update_game_state(chess_board, ui) and run
+        ui.display_board(chess_board.get_board())
 
         if selected_piece:  # If a piece is selected
             # Highlight the selected square
