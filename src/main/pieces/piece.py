@@ -89,7 +89,10 @@ class Piece:
         Returns:
             bool: True if the move is a diagonal move, False otherwise.
         """
-        pass
+
+        row, col = self.position
+        new_row, new_col = new_position
+        return abs(new_row - row) == abs(new_col - col)
 
     def _is_diagonal_capture(self, new_position: tuple) -> bool:
         """
