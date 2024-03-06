@@ -2,11 +2,19 @@ from board import ChessBoard
 from utilities import Utilities
 from pieces import Piece
 import copy
-chess_board = ChessBoard()
-util = Utilities()
+
 
 class AI:
-    def __init__(self, board):
+    def __init__(self, board: ChessBoard):
+        """
+        Initializes an instance of the AI class.
+
+        Args:
+        - board (ChessBoard): The chess board object.
+
+        Returns:
+        - None
+        """
         self.chess_board = board
         self.pieceScore = {
             "King": 1000,
@@ -15,9 +23,18 @@ class AI:
             "Bishop": 3,
             "Knight": 3,
             "Pawn": 1
-            }
+        }
     
-    def evaluate(self, board):
+    def evaluate(self, board: list) -> tuple:
+        """
+        Evaluates the score of the current board state.
+
+        Args:
+        - board (list): The chess board state.
+
+        Returns:
+        - tuple: A tuple containing the score and the best move.
+        """
         score = 0
         for i in range(8):
             for j in range(8):
@@ -35,7 +52,19 @@ class AI:
 
         return score, None
 
-    def is_capture_move(self, row, col, piece, board):
+    def is_capture_move(self, row: int, col: int, piece: Piece, board: list) -> bool:
+        """
+        Checks if a move is a capture move.
+
+        Args:
+        - row (int): The row index of the piece.
+        - col (int): The column index of the piece.
+        - piece (Piece): The piece object.
+        - board (list): The chess board state.
+
+        Returns:
+        - bool: True if the move is a capture move, False otherwise.
+        """
         if not isinstance(piece, Piece):
             return False
 
@@ -48,10 +77,19 @@ class AI:
                         return True
         return False
 
+    def minimax(self, depth: int, isMaximisingPlayer: bool, alpha: float = float('-inf'), beta: float = float('inf')) -> tuple:
+        """
+        Implements the minimax algorithm to find the best move.
 
+        Args:
+        - depth (int): The depth of the search tree.
+        - isMaximisingPlayer (bool): True if the current player is the maximizing player, False otherwise.
+        - alpha (float): The alpha value for alpha-beta pruning.
+        - beta (float): The beta value for alpha-beta pruning.
 
-
-    def minimax(self, depth, isMaximisingPlayer, alpha=float('-inf'), beta=float('inf')):
+        Returns:
+        - tuple: A tuple containing the evaluation score and the best move.
+        """
         original_board = copy.deepcopy(self.chess_board.get_board())
 
         if depth == 0:
