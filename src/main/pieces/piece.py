@@ -158,12 +158,13 @@ class Piece:
         Checks if the new position is empty.
 
         Args:
-            new_position (tuple): The proposed new position for the piece.
+            new_position (tuple): The proposed new position for the rook.
 
         Returns:
             bool: True if the new position is empty, False otherwise.
         """
-        pass
+        row, col = new_position
+        return not isinstance(self.board[row][col], Piece)
 
     def _is_enemy_king(self, new_position: tuple) -> bool:
         """
