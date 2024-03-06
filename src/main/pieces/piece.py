@@ -272,6 +272,44 @@ class Piece:
             return self._is_empty_vertical_path(new_position)
         return False
 
+    def _is_rook_move_valid(self, new_position: tuple) -> bool:
+        """
+        Checks if the move is valid for the rook.
+
+        Args:
+            new_position (tuple): The proposed new position for the rook.
+
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        return self._is_horizontal_move(new_position) or \
+            self._is_vertical_move(new_position)
+
+    def _is_bishop_move_valid(self, new_position: tuple) -> bool:
+        """
+        Checks if the move is valid for the bishop.
+
+        Args:
+            new_position (tuple): The proposed new position for the bishop.
+
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        return self._is_diagonal_move(new_position)
+
+    def _is_queen_move_valid(self, new_position: tuple) -> bool:
+        """
+        Checks if the move is valid for the queen.
+
+        Args:
+            new_position (tuple): The proposed new position for the queen.
+
+        Returns:
+            bool: True if the move is valid, False otherwise.
+        """
+        return self._is_rook_move_valid(new_position) or \
+            self._is_bishop_move_valid(new_position)
+
     def move(self, new_position: tuple) -> None:
         """
         Moves the piece to the new position.
