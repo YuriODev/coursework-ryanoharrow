@@ -9,6 +9,7 @@ ui.setup_window()
 chess_board = ChessBoard()
 ai = AI(chess_board)
 
+"""Change here"""
 
 run = True
 selected_piece = None 
