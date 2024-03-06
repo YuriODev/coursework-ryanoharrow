@@ -5,7 +5,8 @@ class Piece:
     Base class for all chess pieces.
 
     Attributes:
-        color (str): The color of the piece ('w' for white, 'b' for black).
+        color (str): The color of the piece ('White' for white, 'Black' 
+                     for black).
         name (str): The name of the piece (e.g., 'Pawn', 'Rook').
         position (tuple): The current position of the piece on the board.
         board (list): A reference to the board's current state.
