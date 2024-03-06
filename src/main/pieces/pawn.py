@@ -11,45 +11,101 @@ class Pawn(Piece):
     perform a special move known as "en passant."
     """
 
-    def __init__(self, color, position, board):
+    def __init__(self, color: str, position: tuple, board: list):
         super().__init__(color, "Pawn", position, board)
 
-    def is_valid_move(self, new_position):
+    def is_valid_move(self, new_position: tuple) -> bool:
         """
-        Determines if a move is valid for the pawn, taking into account its
-        unique movement and capture rules.
+        Checks if a move is valid for the pawn.
 
         Args:
             new_position (tuple): The proposed new position for the pawn.
 
         Returns:
-            bool: True if the move is valid according to pawn rules, False otherwise.
+            bool: True if the move is valid, False otherwise.
         """
-        current_row, current_col = self.position
-        new_row, new_col = new_position
-        # Pawns move up for 'w' and down for 'b'
-        direction = 1 if self.color == 'b' else -1
-        start_row = 1 if self.color == 'b' else 6
+        if not self.is_move_within_bounds(new_position):
+            return False
 
-        # Move forward one square
-        if (new_col == current_col and
-                new_row == current_row + direction and
-                self.board[new_row][new_col] == "-"):
-            return True
+        # Check if the move is valid
+        if self._is_initial_move(new_position):
+            # Check if the move is a forward move and the path is clear
+            # or if the move is a diagonal capture
+            return self._is_forward_move(new_position) and \
+                   (self._is_empty(new_position) or
+                    self._is_diagonal_capture(new_position))
 
-        # Initial move: move forward two squares
-        if (current_row == start_row and
-                new_col == current_col and
-                new_row == current_row + 2 * direction and
-                self.board[current_row + direction][current_col] == "-" and
-                self.board[new_row][new_col] == "-"):
-            return True
+        # Check if the move is a forward move and the path is clear
+        elif self._is_forward_move(new_position):
+            return self._is_empty(new_position)
 
-        # Capture diagonally
-        if (new_row == current_row + direction and
-                abs(new_col - current_col) == 1):
-            target = self.board[new_row][new_col]
-            if isinstance(target, Piece) and target.color != self.color:
-                return True
-
+        # Check if the move is a diagonal capture move and the piece at
+        # the new position is the opposite color
+        elif self._is_diagonal_capture(new_position):
+            return self._is_opposite_color(new_position)
         return False
+
+    def _is_forward_move(self, new_position: tuple) -> bool:
+        """
+        Checks if the move is a forward move.
+
+        Args:
+            new_position (tuple): The proposed new position for the pawn.
+
+        Returns:
+            bool: True if the move is a forward move, False otherwise.
+        """
+        row, col = self.position
+        new_row, new_col = new_position
+        if self.color == "White":
+            return new_col == col and new_row == row - 1
+        elif self.color == "Black":
+            return new_col == col and new_row == row + 1
+        return False
+
+    def _is_diagonal_capture(self, new_position: tuple) -> bool:
+        """
+        Checks if the move is a diagonal capture move.
+
+        Args:
+            new_position (tuple): The proposed new position for the pawn.
+
+        Returns:
+            bool: True if the move is a diagonal capture move, False otherwise.
+        """
+        row, col = self.position
+        new_row, new_col = new_position
+        if self.color == "White":
+            return new_row == row - 1 and \
+                   (new_col == col - 1 or new_col == col + 1)
+        elif self.color == "Black":
+            return new_row == row + 1 and \
+                   (new_col == col - 1 or new_col == col + 1)
+        return False
+
+    def _is_opposite_color(self, new_position: tuple) -> bool:
+        """
+        Checks if the piece at the new position is the opposite color.
+
+        Args:
+            new_position (tuple): The proposed new position for the pawn.
+
+        Returns:
+            bool: True if the piece at the new position is the opposite
+                  color, False otherwise.
+        """
+        new_row, new_col = new_position
+        return self.board[new_row][new_col].color != self.color
+
+    def _is_empty(self, new_position: tuple) -> bool:
+        """
+        Checks if the new position is empty.
+
+        Args:
+            new_position (tuple): The proposed new position for the pawn.
+
+        Returns:
+            bool: True if the new position is empty, False otherwise.
+        """
+        new_row, new_col = new_position
+        return self.board[new_row][new_col] == "-"
