@@ -6,9 +6,7 @@ class Bishop(Piece):
     """
     Represents a bishop in the chess game. Inherits from Piece.
 
-    The Bishop moves straight forward one square, or optionally, two squares
-    from its starting position, but it captures diagonally. Bishops can also
-    perform a special move known as "en passant."
+    The Bishop moves any number of squares diagonally.
     """
 
     def __init__(self, color: str, position: tuple, board: list):
@@ -29,7 +27,7 @@ class Bishop(Piece):
 
         # Check if the move is valid
         if self._is_diagonal_move(new_position):
-            return self._is_empty_path(new_position) or \
+            return self._is_empty_path(new_position) and \
                 self._is_opposite_color(new_position)
         return False
 
