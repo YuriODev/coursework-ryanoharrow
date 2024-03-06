@@ -26,4 +26,4 @@ class Bishop(Piece):
             return False
 
         # Check if the move is valid
-        return self.is_diagonal_move(new_position)
+        return self._is_bishop_move_valid(new_position)
