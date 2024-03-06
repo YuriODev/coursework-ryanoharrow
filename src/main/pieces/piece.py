@@ -65,7 +65,7 @@ class Piece:
             bool: True if the move is the piece's initial move, False
                   otherwise.
         """
-        pass
+        return self.is_initial_position
 
     def _is_forward_move(self, new_position: tuple) -> bool:
         """
@@ -152,6 +152,41 @@ class Piece:
                   False otherwise.
         """
         pass
+
+    def _is_empty(self, new_position: tuple) -> bool:
+        """
+        Checks if the new position is empty.
+
+        Args:
+            new_position (tuple): The proposed new position for the piece.
+
+        Returns:
+            bool: True if the new position is empty, False otherwise.
+        """
+        pass
+
+    def _is_enemy_king(self, new_position: tuple) -> bool:
+        """
+        Checks if the piece at the new position is the enemy king.
+
+        Args:
+            new_position (tuple): The proposed new position for the piece.
+
+        Returns:
+            bool: True if the piece at the new position is the enemy king,
+                  False otherwise.
+        """
+        pass
+
+    def move(self, new_position: tuple) -> None:
+        """
+        Moves the piece to the new position.
+
+        Args:
+            new_position (tuple): The new position of the piece.
+        """
+        self.position = new_position
+        self.is_initial_position = False
 
     def __str__(self) -> str:
         """
