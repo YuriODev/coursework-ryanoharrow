@@ -116,7 +116,10 @@ class Piece:
         Returns:
             bool: True if the move is a vertical move, False otherwise.
         """
-        pass
+        
+        _, col = self.position
+        _, new_col = new_position
+        return new_col == col
 
     def _is_horizontal_move(self, new_position: tuple) -> bool:
         """
@@ -128,7 +131,10 @@ class Piece:
         Returns:
             bool: True if the move is a horizontal move, False otherwise.
         """
-        pass
+        
+        row, _ = self.position
+        new_row, _ = new_position
+        return new_row == row
 
     def _is_opposite_color(self, new_position: tuple) -> bool:
         """
