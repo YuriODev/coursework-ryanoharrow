@@ -172,4 +172,4 @@ class Piece:
             str: The string representation of the piece.
         """
 
-        return str(self.__class__.__name__)
+        return self.__class__.__name__
