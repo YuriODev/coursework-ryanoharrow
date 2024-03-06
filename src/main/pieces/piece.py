@@ -5,24 +5,24 @@ class Piece:
     Base class for all chess pieces.
 
     Attributes:
-        color (str): The color of the piece ('White' for white, 'Black'
+        colour (str): The colour of the piece ('White' for white, 'Black'
                      for black).
         name (str): The name of the piece (e.g., 'Pawn', 'Rook').
         position (tuple): The current position of the piece on the board.
         board (list): A reference to the board's current state.
     """
 
-    def __init__(self, color: str, name: str, position: tuple, board: list):
+    def __init__(self, colour: str, name: str, position: tuple, board: list):
         """
         Initializes a new Piece.
 
         Args:
-            color (str): The color of the piece.
+            colour (str): The colour of the piece.
             name (str): The name of the piece.
             position (tuple): The starting position of the piece.
             board (list): A reference to the board's current state.
         """
-        self.color = color
+        self.colour = colour
         self.name = name
         self.position = position
         self.board = board
@@ -116,7 +116,7 @@ class Piece:
         Returns:
             bool: True if the move is a vertical move, False otherwise.
         """
-        
+
         _, col = self.position
         _, new_col = new_position
         return new_col == col
@@ -131,25 +131,25 @@ class Piece:
         Returns:
             bool: True if the move is a horizontal move, False otherwise.
         """
-        
+
         row, _ = self.position
         new_row, _ = new_position
         return new_row == row
 
-    def _is_opposite_color(self, new_position: tuple) -> bool:
+    def _is_opposite_colour(self, new_position: tuple) -> bool:
         """
-        Checks if the piece at the new position is the opposite color.
+        Checks if the piece at the new position is the opposite colour.
 
         Args:
             new_position (tuple): The proposed new position for the piece.
 
         Returns:
             bool: True if the piece at the new position is the opposite
-                  color, False otherwise.
+                  colour, False otherwise.
         """
         row, col = new_position
         return isinstance(self.board[row][col], Piece) and \
-            self.board[row][col].color != self.color
+            self.board[row][col].colour != self.colour
 
     def _is_empty(self, new_position: tuple) -> bool:
         """
@@ -327,7 +327,7 @@ class Piece:
         Returns:
             str: The string representation of the piece.
         """
-        return f"{self.color[0]}{self.name[0]}"
+        return f"{self.colour[0]}{self.name[0]}"
 
     def __repr__(self) -> str:
         """
