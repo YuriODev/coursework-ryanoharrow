@@ -92,7 +92,8 @@ class Piece:
         """
         pass
 
-    def _is_diagonal_capture(self, new_position: tuple, direction: int) -> bool:
+    def _is_diagonal_capture(self, new_position: tuple,
+                             direction: int) -> bool:
         """
         Checks if the move is a diagonal capture move.
 
