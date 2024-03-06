@@ -1,13 +1,13 @@
-# chess_game/pieces/pawn.py
+# chess_game/pieces/rook.py
 from .piece import Piece
 
 
 class Rook(Piece):
     """
-    Represents a pawn in the chess game. Inherits from Piece.
+    Represents a rook in the chess game. Inherits from Piece.
 
-    The Pawn moves straight forward one square, or optionally, two squares
-    from its starting position, but it captures diagonally. Pawns can also
+    The Rook moves straight forward one square, or optionally, two squares
+    from its starting position, but it captures diagonally. Rooks can also
     perform a special move known as "en passant."
     """
 
