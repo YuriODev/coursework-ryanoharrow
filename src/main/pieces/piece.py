@@ -26,6 +26,7 @@ class Piece:
         self.name = name
         self.position = position
         self.board = board
+        self.is_initial_position = True
 
     def is_move_within_bounds(self, position: tuple) -> bool:
         """
@@ -53,13 +54,12 @@ class Piece:
         """
         pass
 
-    def _is_initial_move(self, new_position: tuple, direction: int) -> bool:
+    def _is_initial_move(self, new_position: tuple) -> bool:
         """
         Checks if the move is the piece's initial move.
 
         Args:
             new_position (tuple): The proposed new position for the piece.
-            direction (int): The direction the piece is moving.
 
         Returns:
             bool: True if the move is the piece's initial move, False
@@ -67,13 +67,12 @@ class Piece:
         """
         pass
 
-    def _is_forward_move(self, new_position: tuple, direction: int) -> bool:
+    def _is_forward_move(self, new_position: tuple) -> bool:
         """
         Checks if the move is a forward move.
 
         Args:
             new_position (tuple): The proposed new position for the piece.
-            direction (int): The direction the piece is moving.
 
         Returns:
             bool: True if the move is a forward move, False otherwise.
@@ -92,14 +91,12 @@ class Piece:
         """
         pass
 
-    def _is_diagonal_capture(self, new_position: tuple,
-                             direction: int) -> bool:
+    def _is_diagonal_capture(self, new_position: tuple) -> bool:
         """
         Checks if the move is a diagonal capture move.
 
         Args:
             new_position (tuple): The proposed new position for the piece.
-            direction (int): The direction the piece is moving.
 
         Returns:
             bool: True if the move is a diagonal capture move, False otherwise.
