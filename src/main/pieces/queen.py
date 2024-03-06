@@ -226,10 +226,4 @@ class Queen(Piece):
             return False
 
         # Check if the move is valid
-        if self._is_diagonal_move(new_position) or \
-                self._is_horizontal_move(new_position) or \
-                self._is_vertical_move(new_position):
-            return self._is_empty_path(new_position) or \
-                self._is_opposite_color(new_position)
-
-        return False
+        return self._is_queen_move_valid(new_position)
