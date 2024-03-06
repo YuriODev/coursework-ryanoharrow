@@ -138,7 +138,9 @@ class Piece:
             bool: True if the piece at the new position is the opposite
                   color, False otherwise.
         """
-        pass
+        row, col = new_position
+        return isinstance(self.board[row][col], Piece) and \
+            self.board[row][col].color != self.color
 
     def _is_same_color(self, new_position: tuple) -> bool:
         """
