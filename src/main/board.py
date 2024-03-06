@@ -1,7 +1,15 @@
 from pieces import Piece, Pawn, Rook, Bishop, Knight, King, Queen
 from pprint import pprint
 
+
 class ChessBoard:
+    """
+    This class represents the chess board. It is responsible for setting up the board and moving pieces.
+
+    """
+    
+
+
     def __init__(self):
         self.__board = [["-" for _ in range(8)] for _ in range(8)]
         for col in range(8):
@@ -27,6 +35,18 @@ class ChessBoard:
         self.__board[7][3] = Queen("w", "Queen", self.__board)
 
     def move_piece(self, from_row, from_col, to_row, to_col):
+        """
+        This method moves a piece from one position to another. It checks if the move is valid and if it is, it moves the piece to the new position.
+
+        :param from_row: The row of the piece to be moved.
+        :param
+        :param to_row: The row of the position to move the piece to.
+        :param to_col: The column of the position to move the piece to.
+        :return: True if the move is valid and the piece is moved, False otherwise.
+        
+        """
+        
+
         piece = self.__board[from_row][from_col]
         target_piece = self.__board[to_row][to_col]
         if isinstance(piece, Piece) and piece.is_valid_move(self.__board, from_row, from_col, to_row, to_col):
