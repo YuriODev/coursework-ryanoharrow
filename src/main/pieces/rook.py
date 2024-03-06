@@ -27,7 +27,4 @@ class Rook(Piece):
             return False
 
         # Check if the move is horizontal or vertical and the path is clear
-        if self._is_horizontal_move(new_position) or \
-                self._is_vertical_move(new_position):
-            return self._is_empty_path(new_position) or \
-                self._is_opposite_color(new_position)
+        return self._is_rook_move_valid(new_position)
