@@ -12,8 +12,8 @@ class Knight(Piece):
     vertically and one square horizontally.
     """
 
-    def __init__(self, color: str, position: tuple, board: list):
-        super().__init__(color, "Knight", position, board)
+    def __init__(self, colour: str, position: tuple, board: list):
+        super().__init__(colour, "Knight", position, board)
 
     def is_valid_move(self, new_position: tuple) -> bool:
         """
@@ -31,7 +31,7 @@ class Knight(Piece):
         # Check if the move is valid
         return self._is_L_shape_move(new_position) and \
             (self._is_empty(new_position) or
-             self._is_opposite_color(new_position))
+             self._is_opposite_colour(new_position))
 
     def _is_L_shape_move(self, new_position: tuple) -> bool:
         """

@@ -11,8 +11,8 @@ class Pawn(Piece):
     perform a special move known as "en passant."
     """
 
-    def __init__(self, color: str, position: tuple, board: list):
-        super().__init__(color, "Pawn", position, board)
+    def __init__(self, colour: str, position: tuple, board: list):
+        super().__init__(colour, "Pawn", position, board)
 
     def is_valid_move(self, new_position: tuple) -> bool:
         """
@@ -40,9 +40,9 @@ class Pawn(Piece):
             return self._is_empty(new_position)
 
         # Check if the move is a diagonal capture move and the piece at
-        # the new position is the opposite color
+        # the new position is the opposite colour
         elif self._is_diagonal_capture(new_position):
-            return self._is_opposite_color(new_position)
+            return self._is_opposite_colour(new_position)
         return False
 
     def _is_forward_move(self, new_position: tuple) -> bool:
@@ -57,9 +57,9 @@ class Pawn(Piece):
         """
         row, col = self.position
         new_row, new_col = new_position
-        if self.color == "White":
+        if self.colour == "White":
             return new_col == col and new_row == row - 1
-        elif self.color == "Black":
+        elif self.colour == "Black":
             return new_col == col and new_row == row + 1
         return False
 
@@ -75,10 +75,10 @@ class Pawn(Piece):
         """
         row, col = self.position
         new_row, new_col = new_position
-        if self.color == "White":
+        if self.colour == "White":
             return new_row == row - 1 and \
                    (new_col == col - 1 or new_col == col + 1)
-        elif self.color == "Black":
+        elif self.colour == "Black":
             return new_row == row + 1 and \
                    (new_col == col - 1 or new_col == col + 1)
         return False

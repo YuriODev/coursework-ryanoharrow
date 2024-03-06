@@ -1,5 +1,4 @@
 # chess_game/pieces/piece.py
-
 class Piece:
     """
     Base class for all chess pieces.

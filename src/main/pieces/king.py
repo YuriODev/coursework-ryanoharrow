@@ -10,8 +10,8 @@ class King(Piece):
     or diagonally.
     """
 
-    def __init__(self, color: str, position: tuple, board: list):
-        super().__init__(color, "King", position, board)
+    def __init__(self, colour: str, position: tuple, board: list):
+        super().__init__(colour, "King", position, board)
 
     def is_valid_move(self, new_position: tuple) -> bool:
         """
@@ -31,4 +31,4 @@ class King(Piece):
         col_diff = abs(new_position[1] - self.position[1])
         return (row_diff == 1 or col_diff == 1) and \
                (self._is_empty(new_position) or
-                self._is_opposite_color(new_position))
+                self._is_opposite_colour(new_position))

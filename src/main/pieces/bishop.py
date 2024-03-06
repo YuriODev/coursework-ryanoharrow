@@ -9,8 +9,8 @@ class Bishop(Piece):
     The Bishop moves any number of squares diagonally.
     """
 
-    def __init__(self, color: str, position: tuple, board: list):
-        super().__init__(color, "Bishop", position, board)
+    def __init__(self, colour: str, position: tuple, board: list):
+        super().__init__(colour, "Bishop", position, board)
 
     def is_valid_move(self, new_position: tuple) -> bool:
         """

@@ -11,8 +11,8 @@ class Queen(Piece):
 
     """
 
-    def __init__(self, color: str, position: tuple, board: list):
-        super().__init__(color, "Queen", position, board)
+    def __init__(self, colour: str, position: tuple, board: list):
+        super().__init__(colour, "Queen", position, board)
 
     def is_valid_move(self, new_position: tuple) -> bool:
         """

@@ -18,7 +18,7 @@ class Rook(Piece):
         Checks if a move is valid for the rook.
 
         Args:
-            new_position (tuple): The proposed new position for the rook.
+            new_position (tuple): The colour new position for the rook.
 
         Returns:
             bool: True if the move is valid, False otherwise.
