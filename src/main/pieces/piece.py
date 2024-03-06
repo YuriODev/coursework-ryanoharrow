@@ -142,19 +142,6 @@ class Piece:
         return isinstance(self.board[row][col], Piece) and \
             self.board[row][col].color != self.color
 
-    def _is_same_color(self, new_position: tuple) -> bool:
-        """
-        Checks if the piece at the new position is the same color.
-
-        Args:
-            new_position (tuple): The proposed new position for the piece.
-
-        Returns:
-            bool: True if the piece at the new position is the same color,
-                  False otherwise.
-        """
-        pass
-
     def _is_empty(self, new_position: tuple) -> bool:
         """
         Checks if the new position is empty.
