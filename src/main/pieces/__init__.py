@@ -1,6 +1,10 @@
 # chess_game/__init__.py
 # This file can be left empty or used for package-wide imports and variables.
+from .pawn import Pawn
+from .rook import Rook
+from .knight import Knight
+from .bishop import Bishop
+from .queen import Queen
+from .king import King
 
-# chess_game/pieces/__init__.py
-# This file can also be left empty or used for specific imports from the
-# pieces package.
+__all__ = ["Pawn", "Rook", "Knight", "Bishop", "Queen", "King"]
