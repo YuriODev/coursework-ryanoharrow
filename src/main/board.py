@@ -70,5 +70,6 @@ class ChessBoard:
         Returns:
             True if the game is over, False otherwise.
         """
+        self.display()
         kings_count = sum(1 for row in self.__board for piece in row if isinstance(piece, King))
         return kings_count < 2
