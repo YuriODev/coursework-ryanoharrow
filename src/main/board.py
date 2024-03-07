@@ -4,92 +4,71 @@ from pprint import pprint
 
 class ChessBoard:
     """
-    This class represents the chess board. It is responsible for setting up the board and moving pieces.
-
+    Represents the chess board, responsible for setting up the board and moving pieces.
     """
-    
-
 
     def __init__(self):
         self.__board = [["-" for _ in range(8)] for _ in range(8)]
-        for col in range(8):
-            self.__board[1][col] = Pawn("b", "Pawn", self.__board)
-        self.__board[0][0] = Rook("b", "Rook", self.__board)
-        self.__board[0][7] = Rook("b", "Rook", self.__board)
-        self.__board[0][2] = Bishop("b", "Bishop", self.__board)
-        self.__board[0][5] = Bishop("b", "Bishop", self.__board)
-        self.__board[0][1] = Knight("b", "Knight", self.__board)
-        self.__board[0][6] = Knight("b", "Knight", self.__board)
-        self.__board[0][4] = King("b", "King", self.__board)
-        self.__board[0][3] = Queen("b", "Queen", self.__board)
-        
-        for col in range(8):
-            self.__board[6][col] = Pawn("w", "Pawn", self.__board)
-        self.__board[7][7] = Rook("w", "Rook", self.__board)
-        self.__board[7][0] = Rook("w", "Rook", self.__board)
-        self.__board[7][5] = Bishop("w", "Bishop", self.__board)
-        self.__board[7][2] = Bishop("w", "Bishop", self.__board)
-        self.__board[7][1] = Knight("w", "Knight", self.__board)
-        self.__board[7][6] = Knight("w", "Knight", self.__board)
-        self.__board[7][4] = King("w", "King", self.__board)
-        self.__board[7][3] = Queen("w", "Queen", self.__board)
+        self.__setup_pieces()
 
-    def move_piece(self, from_row, from_col, to_row, to_col):
+    def __setup_pieces_for_colour(self, colour, row):
+        for col, piece_cls in enumerate([Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook], start=0):
+            self.__board[row][col] = piece_cls(colour, (row, col), self.__board)
+            self.__board[row + 1][col] = Pawn(colour, (row + 1, col), self.__board)
+
+    def __setup_pieces(self):
         """
-        This method moves a piece from one position to another. It checks if the move is valid and if it is, it moves the piece to the new position.
-
-        :param from_row: The row of the piece to be moved.
-        :param
-        :param to_row: The row of the position to move the piece to.
-        :param to_col: The column of the position to move the piece to.
-        :return: True if the move is valid and the piece is moved, False otherwise.
-        
+        Sets up the pieces on the board in their initial positions.
         """
-        
 
+        self.__setup_pieces_for_colour("Black", 0)
+        self.__setup_pieces_for_colour("White", 6)
+
+    def move_piece(self, from_row: int, from_col: int, to_row: int, to_col: int) -> bool:
+        """
+        Moves a piece from one position to another if the move is valid.
+
+        Args:
+            from_row: The row of the piece to be moved.
+            from_col: The column of the piece to be moved.
+            to_row: The row of the target position.
+            to_col: The column of the target position.
+
+        Returns:
+            True if the move is valid and completed, False otherwise.
+        """
         piece = self.__board[from_row][from_col]
-        target_piece = self.__board[to_row][to_col]
-        if isinstance(piece, Piece) and piece.is_valid_move(self.__board, from_row, from_col, to_row, to_col):
-            if not (isinstance(target_piece, Piece) and target_piece.colour == piece.colour):
+        if isinstance(piece, Piece) and piece.is_valid_move((to_row, to_col)):
+            target_piece = self.__board[to_row][to_col]
+            if not isinstance(target_piece, Piece) or target_piece.colour != piece.colour:
                 self.__board[to_row][to_col] = piece
                 self.__board[from_row][from_col] = "-"
+                piece.position = (to_row, to_col)  # Update piece's position
                 return True
         return False
 
-    
-    def get_board(self):
-        return self.__board
-    
-    def check_collision(self, to_row, to_col):  
-        pprint(self.__board)
-        if self.__board[to_row][to_col] != "-":
-            return True
-    
-    def set_board(self, new_board_state):
-        for i in range(8):
-            for j in range(8):
-                self.__board[i][j] = new_board_state[i][j] 
-        # self.display()
+    def get_board(self) -> list:
+        """
+        Returns the current state of the board.
 
-    def display(self):
-        for i in range (8):
-            for j in range (8):
-                piece = self.__board[i][j]
-                if isinstance(piece,Piece):
-                    print (piece.name,end=" ")
-                else:
-                    print ("-", end=" ")
-            print("")
+        Returns:
+            The board state as a list of lists.
+        """
+        return self.__board
+
+    def display(self) -> None:
+        """
+        Prints the board to the console.
+        """
+        for row in self.__board:
+            print(' '.join([piece.name[0] if isinstance(piece, Piece) else "-" for piece in row]))
     
-    def is_game_over(self):
-        count = 0
-        for i in range(8):
-            for j in range(8):
-                try:
-                    piece = self.__board[i][j]
-                    if piece.name == "King":
-                        count+=1
-                except AttributeError:
-                    pass
-                
-        return count
+    def is_game_over(self) -> bool:
+        """
+        Checks if the game is over (if one or both kings are missing).
+
+        Returns:
+            True if the game is over, False otherwise.
+        """
+        kings_count = sum(1 for row in self.__board for piece in row if isinstance(piece, King))
+        return kings_count < 2
