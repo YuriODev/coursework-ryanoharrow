@@ -5,6 +5,7 @@ from pieces import Piece
 
 import copy
 
+
 class AI:
     def __init__(self, chess_board: ChessBoard):
         self.chess_board = chess_board
