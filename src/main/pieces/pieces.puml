@@ -1,0 +1,70 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class node2 as "bishop.Bishop" {
+   __init__(self, colour: str, position: tuple, board: list): 
+   is_valid_move(self, new_position: tuple): 
+}
+class node5 as "king.King" {
+   __init__(self, colour: str, position: tuple, board: list): 
+   is_valid_move(self, new_position: tuple): 
+}
+class node4 as "knight.Knight" {
+   __init__(self, colour: str, position: tuple, board: list): 
+   is_valid_move(self, new_position: tuple): 
+   _is_L_shape_move(self, new_position: tuple): 
+}
+class node0 as "pawn.Pawn" {
+   __init__(self, colour: str, position: tuple, board: list): 
+   is_valid_move(self, new_position: tuple): 
+   _is_forward_move(self, new_position: tuple): 
+   _is_diagonal_capture(self, new_position: tuple): 
+}
+class node3 as "piece.Piece" {
+   colour: 
+   is_initial_position: 
+   name: 
+   position: 
+   board: 
+   __init__(self, colour: str, name: str, position: tuple, board: list): 
+   is_move_within_bounds(self, position: tuple): 
+   is_valid_move(self, new_position: tuple): 
+   _is_initial_move(self, new_position: tuple): 
+   _is_forward_move(self, new_position: tuple): 
+   _is_diagonal_move(self, new_position: tuple): 
+   _is_diagonal_capture(self, new_position: tuple): 
+   _is_vertical_move(self, new_position: tuple): 
+   _is_horizontal_move(self, new_position: tuple): 
+   _is_opposite_colour(self, new_position: tuple): 
+   _is_empty(self, new_position: tuple): 
+   _is_enemy_king(self, new_position: tuple): 
+   _is_empty_diagonal_path(self, new_position: tuple): 
+   _is_empty_horizontal_path(self, new_position: tuple): 
+   _is_empty_vertical_path(self, new_position: tuple): 
+   _is_empty_path(self, new_position: tuple): 
+   _is_rook_move_valid(self, new_position: tuple): 
+   _is_bishop_move_valid(self, new_position: tuple): 
+   _is_queen_move_valid(self, new_position: tuple): 
+   move(self, new_position: tuple): 
+   __str__(self): 
+   __repr__(self): 
+}
+class node1 as "queen.Queen" {
+   __init__(self, colour: str, position: tuple, board: list): 
+   is_valid_move(self, new_position: tuple): 
+}
+class node6 as "rook.Rook" {
+   __init__(self, color: str, position: tuple, board: list): 
+   is_valid_move(self, new_position: tuple): 
+}
+
+node2  ^-[#595959,plain]-  node3 
+node5  ^-[#595959,plain]-  node3 
+node4  ^-[#595959,plain]-  node3 
+node0  ^-[#595959,plain]-  node3 
+node1  ^-[#595959,plain]-  node3 
+node6  ^-[#595959,plain]-  node3 
+@enduml
