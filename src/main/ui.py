@@ -9,18 +9,18 @@ class UI:
         self.WHITE = (255, 242, 227)
         self.GREEN = (175, 183, 170)
         self.IMAGES = {
-    "wPawn": pg.image.load("images/wP.png"),
-    "bPawn": pg.image.load("images/bP.png"),
-    "bBishop": pg.image.load("images/bB.png"),
-    "wBishop": pg.image.load("images/wB.png"),
-    "wKnight": pg.image.load("images/wKn.png"),
-    "bKnight": pg.image.load("images/bKn.png"),
-    "bKing": pg.image.load("images/bK.png"),
-    "wKing": pg.image.load("images/wK.png"),
-    "wRook": pg.image.load("images/wR.png"),
-    "bRook": pg.image.load("images/bR.png"),
-    "bQueen": pg.image.load("images/bQ.png"),
-    "wQueen": pg.image.load("images/wQ.png")
+    "WhitePawn": pg.image.load("images/wP.png"),
+    "BlackPawn": pg.image.load("images/bP.png"),
+    "BlackBishop": pg.image.load("images/bB.png"),
+    "WhiteBishop": pg.image.load("images/wB.png"),
+    "WhiteKnight": pg.image.load("images/wKn.png"),
+    "BlackKnight": pg.image.load("images/bKn.png"),
+    "BlackKing": pg.image.load("images/bK.png"),
+    "WhiteKing": pg.image.load("images/wK.png"),
+    "WhiteRook": pg.image.load("images/wR.png"),
+    "BlackRook": pg.image.load("images/bR.png"),
+    "BlackQueen": pg.image.load("images/bQ.png"),
+    "WhiteQueen": pg.image.load("images/wQ.png")
 }
 
     def setup_window(self):
