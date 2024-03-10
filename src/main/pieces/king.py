@@ -1,5 +1,7 @@
 # chess_game/pieces/pawn.py
+from __future__ import annotations
 from .piece import Piece
+from .validator import MoveValidator
 
 
 class King(Piece):
@@ -10,25 +12,27 @@ class King(Piece):
     or diagonally.
     """
 
-    def __init__(self, colour: str, position: tuple, board: list):
-        super().__init__(colour, "King", position, board)
+    def __init__(self, colour: str, position: tuple):
+        """
+        Initializes a new King. Inherits from Piece.
 
-    def is_valid_move(self, new_position: tuple) -> bool:
+        Args:
+            colour (str): The colour of the king.
+            position (tuple): The starting position of the king.
+        """
+        super().__init__(colour, "King", position)
+
+    def is_valid_move(self, new_position: tuple,
+                      chess_board: ChessBoard) -> bool:
         """
         Checks if a move is valid for the king.
 
         Args:
             new_position (tuple): The proposed new position for the king.
+            chess_board (ChessBoard): The current state of the board.
 
         Returns:
             bool: True if the move is valid, False otherwise.
         """
-        if not self.is_move_within_bounds(new_position):
-            return False
-
-        # Check if the move is valid
-        row_diff = abs(new_position[0] - self.position[0])
-        col_diff = abs(new_position[1] - self.position[1])
-        return (row_diff == 1 or col_diff == 1) and \
-               (self._is_empty(new_position) or
-                self._is_opposite_colour(new_position))
+        return MoveValidator.is_king_move_valid(self.position, new_position,
+                                                chess_board)
