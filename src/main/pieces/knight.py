@@ -1,56 +1,38 @@
 # chess_game/pieces/knight.py
+from __future__ import annotations
 from .piece import Piece
+from .validator import MoveValidator
 
 
 class Knight(Piece):
     """
     Represents a knight in the chess game. Inherits from Piece.
 
-    The Knight moves to any of the squares immediately adjacent to it that
-    are not on the same rank, file, or diagonal. In other words, the knight
-    moves two squares horizontally and one square vertically, or two squares
-    vertically and one square horizontally.
+    The Knight moves in an L-shape, two squares in one direction and one
+    square in a perpendicular direction.
     """
 
-    def __init__(self, colour: str, position: tuple, board: list):
-        super().__init__(colour, "Knight", position, board)
+    def __init__(self, colour: str, position: tuple):
+        """
+        Initializes a new Knight. Inherits from Piece.
 
-    def is_valid_move(self, new_position: tuple) -> bool:
+        Args:
+            colour (str): The colour of the knight.
+            position (tuple): The starting position of the knight.
+        """
+        super().__init__(colour, "Knight", position)
+
+    def is_valid_move(self, new_position: tuple,
+                      chess_board: ChessBoard) -> bool:
         """
         Checks if a move is valid for the knight.
 
         Args:
             new_position (tuple): The proposed new position for the knight.
+            chess_board (ChessBoard): The current state of the board.
 
         Returns:
             bool: True if the move is valid, False otherwise.
         """
-        if not self.is_move_within_bounds(new_position):
-            return False
-
-        # Check if the move is valid
-        return self._is_L_shape_move(new_position) and \
-            (self._is_empty(new_position) or
-             self._is_opposite_colour(new_position))
-
-    def _is_L_shape_move(self, new_position: tuple) -> bool:
-        """
-        Checks if the move is an L-shape move.
-
-        Args:
-            new_position (tuple): The proposed new position for the knight.
-
-        Returns:
-            bool: True if the move is an L-shape move, False otherwise.
-        """
-        row, col = self.position
-
-        # All possible L-shape moves
-        L_shape_moves = [
-            (row + 2, col + 1), (row + 2, col - 1),
-            (row - 2, col + 1), (row - 2, col - 1),
-            (row + 1, col + 2), (row + 1, col - 2),
-            (row - 1, col + 2), (row - 1, col - 2)
-        ]
-
-        return new_position in L_shape_moves
+        return MoveValidator.is_knight_move_valid(self.position, new_position,
+                                                  chess_board)
