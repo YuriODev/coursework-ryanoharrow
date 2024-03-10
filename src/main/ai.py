@@ -5,6 +5,8 @@ from pieces import Piece
 
 import copy
 
+util = Utilities()  # Utilities class instance
+
 
 class AI:
     def __init__(self, chess_board: ChessBoard):
@@ -34,14 +36,14 @@ class AI:
                 piece = board[i][j]
                 if isinstance(piece, Piece):
                     piece_value = self.piece_score[piece.__class__.__name__]
-                    if piece.colour == "w":
+                    if piece.colour == "White":
                         score -= piece_value
-                    elif piece.colour == "b":
+                    elif piece.colour == "Black":
                         score += piece_value
                         
                 if self.is_capture_move(i, j, piece, board):
                     capture_bonus = 5 
-                    score += capture_bonus if piece.colour == "b" else -capture_bonus
+                    score += capture_bonus if piece.colour == "Black" else -capture_bonus
 
         return score, None
 
@@ -117,7 +119,7 @@ class AI:
                 if piece != '-' and piece.colour == "b":
                     continue 
 
-                self.chess_board.set_board(copy.deepcopy(original_board)) 
+                self.chess_board.set_board(copy.deepcopy(original_board))
                 self.chess_board.move_piece(from_row, from_col, to_row, to_col)
                 eval, _ = self.minimax(depth - 1, True, alpha, beta)
                 
