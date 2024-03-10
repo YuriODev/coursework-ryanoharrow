@@ -1,84 +1,56 @@
 # chess_game/pieces/pawn.py
+from __future__ import annotations
 from .piece import Piece
+from .validator import MoveValidator
 
 
 class Pawn(Piece):
     """
     Represents a pawn in the chess game. Inherits from Piece.
 
-    The Pawn moves straight forward one square, or optionally, two squares
-    from its starting position, but it captures diagonally. Pawns can also
-    perform a special move known as "en passant."
+    The Pawn moves forward exactly one square, or optionally, two squares
+    when on its starting square. The Pawn captures diagonally to the left
+    or right.
+
     """
 
-    def __init__(self, colour: str, position: tuple, board: list):
-        super().__init__(colour, "Pawn", position, board)
+    def __init__(self, colour: str, position: tuple):
+        """
+        Initializes a new Pawn. Inherits from Piece.
 
-    def is_valid_move(self, new_position: tuple) -> bool:
+        Args:
+            colour (str): The colour of the pawn.
+            position (tuple): The starting position of the pawn.
+        """
+        super().__init__(colour, "Pawn", position)
+        self.__is_initial_move = True
+
+    @property
+    def is_initial_move(self):
+        """
+        Gets the initial move of the pawn.
+        """
+        return self.__is_initial_move
+    
+    @is_initial_move.setter
+    def is_initial_move(self, value: bool):
+        """
+        Sets the initial move of the pawn.
+        """
+        self.__is_initial_move = value
+
+    def is_valid_move(self, new_position: tuple,
+                      chess_board: ChessBoard) -> bool:
         """
         Checks if a move is valid for the pawn.
 
         Args:
             new_position (tuple): The proposed new position for the pawn.
+            chess_board (ChessBoard): The current state of the board.
 
         Returns:
             bool: True if the move is valid, False otherwise.
         """
-        if not self.is_move_within_bounds(new_position):
-            return False
 
-        # Check if the move is valid
-        if self._is_initial_move(new_position):
-            # Check if the move is a forward move and the path is clear
-            # or if the move is a diagonal capture
-            return self._is_forward_move(new_position) and \
-                   (self._is_empty(new_position) or
-                    self._is_diagonal_capture(new_position))
-
-        # Check if the move is a forward move and the path is clear
-        elif self._is_forward_move(new_position):
-            return self._is_empty(new_position)
-
-        # Check if the move is a diagonal capture move and the piece at
-        # the new position is the opposite colour
-        elif self._is_diagonal_capture(new_position):
-            return self._is_opposite_colour(new_position)
-        return False
-
-    def _is_forward_move(self, new_position: tuple) -> bool:
-        """
-        Checks if the move is a forward move.
-
-        Args:
-            new_position (tuple): The proposed new position for the pawn.
-
-        Returns:
-            bool: True if the move is a forward move, False otherwise.
-        """
-        row, col = self.position
-        new_row, new_col = new_position
-        if self.colour == "White":
-            return new_col == col and new_row == row - 1
-        elif self.colour == "Black":
-            return new_col == col and new_row == row + 1
-        return False
-
-    def _is_diagonal_capture(self, new_position: tuple) -> bool:
-        """
-        Checks if the move is a diagonal capture move.
-
-        Args:
-            new_position (tuple): The proposed new position for the pawn.
-
-        Returns:
-            bool: True if the move is a diagonal capture move, False otherwise.
-        """
-        row, col = self.position
-        new_row, new_col = new_position
-        if self.colour == "White":
-            return new_row == row - 1 and \
-                   (new_col == col - 1 or new_col == col + 1)
-        elif self.colour == "Black":
-            return new_row == row + 1 and \
-                   (new_col == col - 1 or new_col == col + 1)
-        return False
+        return MoveValidator.is_pawn_move_valid(self.position, new_position,
+                                                chess_board)
