@@ -7,5 +7,7 @@ from .knight import Knight
 from .bishop import Bishop
 from .queen import Queen
 from .king import King
+from .validator import MoveValidator
 
-__all__ = ["Piece", "Pawn", "Rook", "Knight", "Bishop", "Queen", "King"]
+__all__ = ["Piece", "Pawn", "Rook", "Knight", "Bishop", "Queen", "King",
+           "MoveValidator"]
