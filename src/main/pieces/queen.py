@@ -1,5 +1,7 @@
 # chess_game/pieces/queen.py
+from __future__ import annotations
 from .piece import Piece
+from .validator import MoveValidator
 
 
 class Queen(Piece):
@@ -8,24 +10,29 @@ class Queen(Piece):
 
     The Queen moves any number of squares horizontally, vertically, or
     diagonally.
-
     """
 
-    def __init__(self, colour: str, position: tuple, board: list):
-        super().__init__(colour, "Queen", position, board)
-
-    def is_valid_move(self, new_position: tuple) -> bool:
+    def __init__(self, colour: str, position: tuple):
         """
-        Checks if a move is valid for the pawn.
+        Initializes a new Queen. Inherits from Piece.
 
         Args:
-            new_position (tuple): The proposed new position for the pawn.
+            colour (str): The colour of the queen.
+            position (tuple): The starting position of the queen.
+        """
+        super().__init__(colour, "Queen", position)
+
+    def is_valid_move(self, new_position: tuple,
+                      chess_board: ChessBoard) -> bool:
+        """
+        Checks if a move is valid for the queen.
+
+        Args:
+            new_position (tuple): The proposed new position for the queen.
+            chess_board (ChessBoard): The current state of the board.
 
         Returns:
             bool: True if the move is valid, False otherwise.
         """
-        if not self.is_move_within_bounds(new_position):
-            return False
-
-        # Check if the move is valid
-        return self._is_queen_move_valid(new_position)
+        return MoveValidator.is_queen_move_valid(self.position, new_position,
+                                                 chess_board)
