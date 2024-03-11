@@ -5,7 +5,7 @@ from pieces import Piece
 
 import copy
 
-util = Utilities()  # Utilities class instance
+
 
 
 class AI:
@@ -94,9 +94,11 @@ class AI:
         if is_maximizing_player:
             max_eval = float('-inf')
             best_move = None
-            for potential in util.all_moves(original_board)[0]:
+            for potential in self.all_moves(original_board)[0]:
                 self.chess_board.set_board(copy.deepcopy(original_board))
-                self.chess_board.move_piece(potential[0], potential[1], potential[2], potential[3])
+                from_cc = (potential[0]+potential[1])
+                to_cc = (potential[2]+potential[3])
+                self.chess_board.move_piece(from_cc, to_cc)
                 eval, _ = self.minimax(depth - 1, False, alpha, beta)
             
                 if eval > max_eval:
@@ -113,14 +115,15 @@ class AI:
         else:
             min_eval = float('inf')
             best_move = None
-            for potential in util.all_moves(original_board)[1]:  
-                from_row, from_col, to_row, to_col = potential
-                piece = original_board[to_row][to_col]
+            for potential in self.all_moves(original_board)[1]:  
+                from_cc = (potential[0]+potential[1])
+                to_cc = (potential[2]+potential[3])
+                piece = self.get_piece_at_position(potential[0], potential[1])
                 if piece != '-' and piece.colour == "b":
                     continue 
 
                 self.chess_board.set_board(copy.deepcopy(original_board))
-                self.chess_board.move_piece(from_row, from_col, to_row, to_col)
+                self.chess_board.move_piece(from_cc, to_cc)
                 eval, _ = self.minimax(depth - 1, True, alpha, beta)
                 
                 if eval < min_eval:
@@ -133,3 +136,22 @@ class AI:
 
             self.chess_board.set_board(original_board) 
             return min_eval, best_move
+
+
+    def all_moves(self, board):
+        self.moves = [[], []]
+        for i in range(8):
+            for j in range(8):
+                piece = board[i][j]
+                if isinstance(piece, Piece):
+                    for x in range(8):
+                        for y in range(8):
+                            if piece.is_valid_move((x,y), board):
+                                if piece.colour == "w":
+                                    self.moves[0].append((i, j, x, y))
+                                elif piece.colour == "b":
+                                    # print(f"Black piece {piece} at {i},{j} can move to {x},{y}")
+                                    self.moves[1].append((i, j, x, y))
+        return self.moves
+
+

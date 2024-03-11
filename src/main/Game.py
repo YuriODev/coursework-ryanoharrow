@@ -48,16 +48,18 @@ class Game:
                     if self.current_player == self.user_player:
                         self.handle_user_player_click(clicked_square)
                         self.update_ui()
-                    elif self.current_player == self.ai_player:
-                        self.logger.info("AI's Turn")
+                if self.current_player == self.ai_player:
+                    self.logger.info("AI's Turn ")
                         # AI player's turn logic
-                        self.handle_ai_player_turn()
-                        pygame.display.update()
+                    self.handle_ai_player_turn()
+                    pygame.display.update()
 
-                    elif self.board.is_game_over():
-                        self.logger.info("Game over!")
-                        self.game_running = False
+                elif self.board.is_game_over():
+                    self.logger.info("Game over!")
+                    self.game_running = False
 
+            self.logger.info(f"Current player's turn: {id(self.current_player)}")
+            self.logger.info(f"AI player definition: {id(self.ai_player)}")
             self.update_ui()
             pygame.display.update()
 
@@ -93,6 +95,9 @@ class Game:
                 self.board.move_piece(self.user_player.chosen_square, clicked_square)
                 # Log the move
                 self.logger.info(f"Moved {piece} to {clicked_square}")
+                self.switch_turns()
+                
+                
 
             else:
                 self.logger.info("Move is invalid")
@@ -105,5 +110,5 @@ class Game:
         self.ui.display_board(self.board.get_board())
         pygame.display.update()
 
-    def handle_ai_player_turn():
-        pass
+    def handle_ai_player_turn(self):
+        self.ai_player.make_move(self.board)

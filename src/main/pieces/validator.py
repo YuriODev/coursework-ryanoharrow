@@ -1,4 +1,5 @@
 from __future__ import annotations
+from board import ChessBoard
 
 
 class MoveValidator:
@@ -33,7 +34,7 @@ class MoveValidator:
         Returns:
             bool: True if the new position is empty, False otherwise.
         """
-        board = chess_board.get_board()
+        board = chess_board
         row, col = new_position
         return board[row][col] == "-"
 
@@ -53,7 +54,7 @@ class MoveValidator:
                   colour, False otherwise.
         """
         row, col = new_position
-        board = chess_board.get_board()
+        board = chess_board
         current_piece = board[position[0]][position[1]]
         target_piece = board[row][col]
 
@@ -79,6 +80,7 @@ class MoveValidator:
         Returns:
             bool: True if the move is basically valid, False otherwise.
         """
+
         return MoveValidator.is_move_within_bounds(new_position) and \
             MoveValidator.is_new_cell_empty(new_position, chess_board) or \
             MoveValidator.is_opposite_colour(position,
@@ -166,7 +168,7 @@ class MoveValidator:
         for step in range(1, steps + 1):
             current_row = row + step * row_step
             current_col = col + step * col_step
-            if chess_board.get_board()[current_row][current_col] != "-":
+            if chess_board.get_board()[current_row][current_col] != "-": 
                 return False  # Path is blocked
 
         return True  # Path is clear
@@ -281,7 +283,7 @@ class MoveValidator:
         """
         row, col = position
         new_row, new_col = new_position
-        board = chess_board.get_board()
+        board = chess_board
 
         # Check if the new cell is empty
         if not MoveValidator.is_new_cell_empty(new_position, chess_board):
@@ -318,7 +320,7 @@ class MoveValidator:
         """
         row, col = position
         new_row, new_col = new_position
-        board = chess_board.get_board()
+        board = chess_board
 
         # Check if the move is within the bounds of the board
         if not MoveValidator.is_move_within_bounds(new_position):
@@ -383,7 +385,7 @@ class MoveValidator:
         """
         row, col = position
         new_row, new_col = new_position
-        board = chess_board.get_board()
+        board = chess_board
 
         if col != new_col:
             return False  # The move must be in the same column

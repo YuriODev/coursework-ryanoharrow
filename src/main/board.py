@@ -1,7 +1,7 @@
-from pieces import Piece, Pawn, Rook, Bishop, Knight, King, Queen
 from pprint import pprint
 from game_logger import setup_logging
 import logging
+from pieces import Piece, Pawn, Rook, Bishop, Knight, King, Queen
 setup_logging()
 
 
