@@ -40,7 +40,7 @@ class ChessBoard:
 
         # Ensure that your ChessBoard class has the necessary methods (get_piece_at_position and move_piece) implemented to support these operations. The move_piece method in ChessBoard should handle the logistics of updating the board's internal representation, such as setting the new position to the piece and the old position to a default empty state (like "-").
 
-    def move_piece(self, from_row: int, from_col: int, to_row: int, to_col: int) -> bool:
+    def move_piece(self, from_piece, to_piece) -> bool:
         """
         Moves a piece from one position to another if the move is valid.
 
@@ -53,13 +53,18 @@ class ChessBoard:
         Returns:
             True if the move is valid and completed, False otherwise.
         """
-        piece = self.__board[from_row][from_col]
-        if isinstance(piece, Piece) and piece.is_valid_move((to_row, to_col), self):
-            target_piece = self.__board[to_row][to_col]
-            if not isinstance(target_piece, Piece) or target_piece.colour != piece.colour:
-                self.__board[to_row][to_col] = piece
+
+        from_row, from_col = from_piece
+        to_row, to_col = to_piece
+        
+        from_piece = self.get_piece_at_position(from_row, from_col)
+        to_piece = self.get_piece_at_position(to_row, to_col)
+
+        if isinstance(from_piece, Piece):
+            if not isinstance(to_piece, Piece) or to_piece.colour != from_piece.colour:
+                self.__board[to_row][to_col] = from_piece
                 self.__board[from_row][from_col] = "-"
-                piece.position = (to_row, to_col)  # Update piece's position
+                from_piece.position = (to_row, to_col)  # Update piece's position
                 self.logger.info(f"Current board state: \n{self}")
                 return True
         return False

@@ -13,18 +13,18 @@ class UI:
     WHITE = (255, 242, 227)
     GREEN = (175, 183, 170)
     IMAGES = {
-        "WhitePawn": pygame.image.load("images/wP.png"),
-        "BlackPawn": pygame.image.load("images/bP.png"),
-        "BlackBishop": pygame.image.load("images/bB.png"),
-        "WhiteBishop": pygame.image.load("images/wB.png"),
-        "WhiteKnight": pygame.image.load("images/wKn.png"),
-        "BlackKnight": pygame.image.load("images/bKn.png"),
-        "BlackKing": pygame.image.load("images/bK.png"),
-        "WhiteKing": pygame.image.load("images/wK.png"),
-        "WhiteRook": pygame.image.load("images/wR.png"),
-        "BlackRook": pygame.image.load("images/bR.png"),
-        "BlackQueen": pygame.image.load("images/bQ.png"),
-        "WhiteQueen": pygame.image.load("images/wQ.png")
+        "WhitePawn": pygame.image.load("src/main/images/wP.png"),
+        "BlackPawn": pygame.image.load("src/main/images/bP.png"),
+        "BlackBishop": pygame.image.load("src/main/images/bB.png"),
+        "WhiteBishop": pygame.image.load("src/main/images/wB.png"),
+        "WhiteKnight": pygame.image.load("src/main/images/wKn.png"),
+        "BlackKnight": pygame.image.load("src/main/images/bKn.png"),
+        "BlackKing": pygame.image.load("src/main/images/bK.png"),
+        "WhiteKing": pygame.image.load("src/main/images/wK.png"),
+        "WhiteRook": pygame.image.load("src/main/images/wR.png"),
+        "BlackRook": pygame.image.load("src/main/images/bR.png"),
+        "BlackQueen": pygame.image.load("src/main/images/bQ.png"),
+        "WhiteQueen": pygame.image.load("src/main/images/wQ.png")
     }
 
     def __init__(self, width, height):

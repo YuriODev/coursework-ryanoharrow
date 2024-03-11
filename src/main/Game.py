@@ -47,18 +47,24 @@ class Game:
                     clicked_square = self.ui.get_square_from_mouse(event.pos)
                     if self.current_player == self.user_player:
                         self.handle_user_player_click(clicked_square)
+                        self.update_ui()
                     elif self.current_player == self.ai_player:
+                        self.logger.info("AI's Turn")
                         # AI player's turn logic
                         self.handle_ai_player_turn()
+                        pygame.display.update()
 
                     elif self.board.is_game_over():
                         self.logger.info("Game over!")
                         self.game_running = False
 
             self.update_ui()
+            pygame.display.update()
 
     def handle_user_player_click(self, clicked_square):
         piece = self.board.get_piece_at_position(*clicked_square)
+        # self.logger.info(f"Piece: {piece}")
+        # self.logger.info (f"Stored {self.user_player.chosen_piece}")
         if isinstance(piece, Piece):  # Ensure piece is actually a Piece object
             possible_moves = piece.get_possible_moves(self.board)
             if possible_moves:
@@ -70,10 +76,34 @@ class Game:
             self.logger.info(f"Player {self.current_player} clicked on square {clicked_square} with piece {piece}")
         else:
             # Handle empty cell click, possibly highlight in red if no piece is selected
-            if not self.current_player.choosen_piece:
+            if not self.current_player.chosen_piece:
                 self.ui.highlight_square(*clicked_square, colour="RED")
             self.logger.info(f"Player {self.current_player} clicked on empty square {clicked_square}")
+
+
+        if self.user_player.chosen_piece != None and isinstance(self.user_player.chosen_piece, Piece):
+            possible_moves = self.user_player.chosen_piece.get_possible_moves(self.board)
+            self.logger.info (f"Stored {self.user_player.chosen_piece}")
+            self.logger.info(f"Clicked piece is {clicked_square}")
+            self.logger.info(f"Possible moves are {possible_moves}" )
+            if clicked_square in (possible_moves):
+                self.logger.info("Move is valid")
+
+                # Move the piece to the new position
+                self.board.move_piece(self.user_player.chosen_square, clicked_square)
+                # Log the move
+                self.logger.info(f"Moved {piece} to {clicked_square}")
+
+            else:
+                self.logger.info("Move is invalid")
+        
+        self.user_player.chosen_piece = piece
+        self.user_player.chosen_square = clicked_square
+                
 
     def update_ui(self):
         self.ui.display_board(self.board.get_board())
         pygame.display.update()
+
+    def handle_ai_player_turn():
+        pass

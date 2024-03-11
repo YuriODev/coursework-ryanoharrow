@@ -9,7 +9,8 @@ class Player(ABC):
     def __init__(self, colour):
         self.__colour = colour
         self.__taken_pieces = []
-        self.__choosen_piece = None
+        self.__chosen_piece = None
+        self.__chosen_square = None
         self.__last_move = None
         self.__all_moves = []
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -24,8 +25,17 @@ class Player(ABC):
         return self.__taken_pieces
     
     @property
-    def choosen_piece(self):
-        return self.__choosen_piece
+    def chosen_piece(self):
+        return self.__chosen_piece
+    
+    @property
+    def chosen_square(self):
+        return self.__chosen_square
+    
+    @chosen_square.setter
+    def chosen_square(self, value):
+        self.__chosen_square = value
+
     
     @property
     def last_move(self):
@@ -35,9 +45,9 @@ class Player(ABC):
     def all_moves(self):
         return self.__all_moves
     
-    @choosen_piece.setter
-    def choosen_piece(self, value):
-        self.__choosen_piece = value
+    @chosen_piece.setter
+    def chosen_piece(self, value):
+        self.__chosen_piece = value
 
     @last_move.setter
     def last_move(self, value):
